@@ -3,23 +3,17 @@
 void	ls_structure(char *flags)
 {
 	if (ft_strchr(flags, 'R'))
-	{
 		//Only works with -R and -Rr
 		recursive(".", flags);
-		//ft_putendl("Recursive found");
-	}
 	else
-	{
 		no_recursive(".", flags);
-		//ft_putendl("No recursive found");
-	}
 }
 
 void	recursive(char *path, char *flags)
 {
-	t_helpers current;
-	t_files *files;
-	t_files *dir_path;
+	t_helpers	current;
+	t_files		*files;
+	t_files		*dir_path;
 
 	files = NULL;
 	dir_path = NULL;
@@ -52,13 +46,12 @@ void	recursive(char *path, char *flags)
 		recursive(dir_path->file_name, flags);
 		dir_path = dir_path->next;
 	}
-	free(dir_path->file_name);
 }
 
 void	no_recursive(char *path, char *flags)
 {
-	t_helpers current;
-	t_files *files;
+	t_helpers	current;
+	t_files		*files;
 
 	files = NULL;
 	current.mydir = opendir(path);
@@ -79,10 +72,10 @@ void	no_recursive(char *path, char *flags)
 
 void	list_them(t_files *list)
 {
-	t_helpers curr;
-	struct stat info;
-	struct passwd *usr;
-	struct group *grp;
+	t_helpers		curr;
+	struct stat		info;
+	struct passwd	*usr;
+	struct group	*grp;
 
 	while (list != NULL)
 	{
@@ -101,16 +94,14 @@ void	list_them(t_files *list)
 		ft_putstr(curr.tmp);
 		ft_putchar(' ');
 		ft_putendl(list->file_name);
-		free(curr.buf);
-		free(curr.tmp);
 		list = list->next;
 	}
 }
 
 void	show_modes(t_files *list)
 {
-	struct stat info;
-	char chmod[12];
+	struct stat	info;
+	char		chmod[12];
 
 	lstat(list->file_name, &info);
 	chmod[0] = (S_ISDIR(info.st_mode)) ? 'd' : '-';

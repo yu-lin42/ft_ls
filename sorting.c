@@ -1,6 +1,6 @@
 #include "ft_ls.h"
 
-void sort_sequence(t_files *files, char *flags)
+void	sort_sequence(t_files *files, char *flags)
 {
 	if (ft_strchr(flags, 'r') && (ft_strchr(flags, 't')))
 			sort_in_reverse_time(files);
@@ -38,8 +38,8 @@ void	sort_files(t_files *list)
 
 void	sort_in_reverse_time(t_files *list)
 {
-	char	*store;
-	t_files	*tmp;
+	char		*store;
+	t_files		*tmp;
 	struct stat	info1;
 	struct stat	info2;
 
@@ -86,8 +86,8 @@ void	sort_in_reverse(t_files *list)
 
 void	sort_in_time(t_files *list)
 {
-	char	*store;
-	t_files	*tmp;
+	char		*store;
+	t_files		*tmp;
 	struct stat	info1;
 	struct stat	info2;
 

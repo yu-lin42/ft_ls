@@ -1,9 +1,9 @@
 #include "ft_ls.h"
 
-t_files	*no_flags(char *path)
+t_files		*no_flags(char *path)
 {
-	t_helpers current;
-	t_files *basic;
+	t_helpers	current;
+	t_files		*basic;
 
 	basic = NULL;
 	current.mydir = opendir(path);
@@ -20,11 +20,11 @@ t_files	*no_flags(char *path)
 char	*get_flags(int ac, char **flags_or_files)
 {
 	char	*flags;
-	int	i;
-	int	j;
-	int	f;
+	int		i;
+	int		j;
+	int		f;
 
-	flags = ft_strnew(0);
+	flags = (char *)malloc(sizeof(char)*1);
 	i = 0;
 	f = 0;
 	while (++i < ac)
@@ -42,13 +42,15 @@ char	*get_flags(int ac, char **flags_or_files)
 		}
 	}
 	flags[f] = '\0';
+	if (flags[0] == '\0')
+		return (NULL);
 	return (flags);
 }
 
-t_files	*get_files(int ac, char **flags_or_files)
+t_files		*get_files(int ac, char **flags_or_files)
 {
-	t_files *files;
-	int i;
+	t_files	*files;
+	int		i;
 
 	files = NULL;
 	i = 1;

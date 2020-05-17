@@ -1,11 +1,10 @@
 #include "ft_ls.h"
 
-int	main(int ac, char **av)
+int		main(int ac, char **av)
 {
-	t_files *ls;
-	t_files *files;
-	t_files *val_files;
-	char *flags;
+	t_files	*ls;
+	t_files	*files;
+	char	*flags;
 
 	if (ac == 1)
 	{
@@ -22,14 +21,11 @@ int	main(int ac, char **av)
 		}
 		else if (files != NULL && flags == NULL)
 		{
-			// ft_putendl("Just files");
-			val_files = check_files(files);
-			sort_files(val_files);
-			print_list(&val_files);
+			show_files(files);
 		}
-		else{
-			// check_files(files); //Not working with opendir()
-			ft_putendl("Flags and files");
+		else
+		{
+			multi(flags, files);
 		}
 		free(flags);
 	}

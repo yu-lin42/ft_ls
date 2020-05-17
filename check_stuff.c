@@ -1,6 +1,6 @@
 #include "ft_ls.h"
 
-int    check_flags(char flag)
+int		check_flags(char flag)
 {
     if (ft_strchr(FLAGS, flag) == NULL)
 	{
@@ -13,10 +13,10 @@ int    check_flags(char flag)
     return (0);
 }
 
-t_files	*check_files(t_files *files)
+t_files		*check_files(t_files *files)
 {
-	struct stat buf;
-    t_files *valid;
+	struct stat		buf;
+    t_files			*valid;
 
     valid = NULL;
 	while (files != NULL)
