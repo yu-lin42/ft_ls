@@ -18,13 +18,18 @@ void	recursive(char *path, char *flags)
 	files = NULL;
 	dir_path = NULL;
 	current.mydir = opendir(path);
+	current.tmp = ft_strjoin(path, "/");
+	current.buf = ft_strdup(current.tmp);
+	free(current.tmp);
 	while ((current.mydirent = readdir(current.mydir)))
 	{
 		if (!ft_strchr(flags, 'a') && current.mydirent->d_name[0] == '.')
 			continue;
 		if ((current.mydirent)->d_type == DT_DIR)
-			dir_path = direct_path(path, ((current.mydirent)->d_name));
-		files = dynamic_file((current.mydirent)->d_name, files);
+			dir_path = direct_path(current.buf, ((current.mydirent)->d_name));
+		current.tmp = ft_strjoin(current.buf, (current.mydirent)->d_name);
+		files = dynamic_file(current.tmp, files);
+		free(current.tmp);
 	}
 	closedir(current.mydir);
 	if (files != NULL)
