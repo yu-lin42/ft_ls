@@ -35,7 +35,10 @@ char	*get_flags(int ac, char **flags_or_files)
 			while (flags_or_files[i][j] != '\0')
 			{
 				if(check_flags(flags_or_files[i][j]))
+				{
+					free(flags);
 					return (0);
+				}
 				else
 					flags[f++] = flags_or_files[i][j++];
 			}
@@ -43,7 +46,10 @@ char	*get_flags(int ac, char **flags_or_files)
 	}
 	flags[f] = '\0';
 	if (flags[0] == '\0')
+	{
+		free(flags);
 		return (NULL);
+	}
 	return (flags);
 }
 

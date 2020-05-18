@@ -15,11 +15,11 @@ void	print_list(t_files **stuff)
 	}
 }
 
-void	show_files(t_files *files)
+void	show_files(t_files *list)
 {
 	t_files		*valid;
 
-	valid = check_files(files);
+	valid = check_files(list);
 	sort_files(valid);
 	print_list(&valid);
 }

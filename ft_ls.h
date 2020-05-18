@@ -40,7 +40,7 @@ t_files	*dynamic_file(char *name, t_files *head);
 t_files	*new_file(const char *name);
 void	add_file(const char *name, t_files *files);
 t_files		*direct_path(char *path, char *file_name);
-
+void	get_all(char *path, char *flags, t_files *files, t_files *dir_path);
 void	sort_sequence(t_files *files, char *flags);
 void	sort_files(t_files *list);
 void	sort_in_reverse_time(t_files *list);
@@ -53,7 +53,7 @@ void	show_stats(t_files *list);
 int		check_flags(char flag);
 
 void	print_list(t_files **stuff);
-void	show_files(t_files *files);
+void	show_files(t_files *list);
 
 void	multi(char *flags, t_files *files);
 #endif

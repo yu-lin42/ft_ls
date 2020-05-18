@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ls_sequence.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yu-lin <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/18 21:57:58 by yu-lin            #+#    #+#             */
+/*   Updated: 2020/05/18 22:18:21 by yu-lin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ls.h"
 
 void	ls_structure(char *flags)
@@ -10,28 +22,29 @@ void	ls_structure(char *flags)
 
 void	recursive(char *path, char *flags)
 {
-	t_helpers	current;
+	// t_helpers	current;
 	t_files		*files;
 	t_files		*dir_path;
 	t_files		*tmp;
 
 	files = NULL;
 	dir_path = NULL;
-	current.mydir = opendir(path);
-	current.tmp = ft_strjoin(path, "/");
-	current.buf = ft_strdup(current.tmp);
-	free(current.tmp);
-	while ((current.mydirent = readdir(current.mydir)))
-	{
-		if (!ft_strchr(flags, 'a') && current.mydirent->d_name[0] == '.')
-			continue;
-		if ((current.mydirent)->d_type == DT_DIR)
-			dir_path = direct_path(current.buf, ((current.mydirent)->d_name));
-		current.tmp = ft_strjoin(current.buf, (current.mydirent)->d_name);
-		files = dynamic_file(current.tmp, files);
-		free(current.tmp);
-	}
-	closedir(current.mydir);
+	get_all(path, flags, files, dir_path);
+	// current.mydir = opendir(path);
+	// current.tmp = ft_strjoin(path, "/");
+	// current.buf = ft_strdup(current.tmp);
+	// free(current.tmp);
+	// while ((current.mydirent = readdir(current.mydir)))
+	// {
+	// 	if (!ft_strchr(flags, 'a') && current.mydirent->d_name[0] == '.')
+	// 		continue;
+	// 	if ((current.mydirent)->d_type == DT_DIR)
+	// 		dir_path = direct_path(current.buf, ((current.mydirent)->d_name));
+	// 	current.tmp = ft_strjoin(current.buf, (current.mydirent)->d_name);
+	// 	files = dynamic_file(current.tmp, files);
+	// 	free(current.tmp);
+	// }
+	// closedir(current.mydir);
 	if (files != NULL)
 		sort_sequence(files, flags);
 	if (ft_strchr(flags, 'l'))
