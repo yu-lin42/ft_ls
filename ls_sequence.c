@@ -6,7 +6,7 @@
 /*   By: yu-lin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/18 21:57:58 by yu-lin            #+#    #+#             */
-/*   Updated: 2020/05/18 23:21:20 by yu-lin           ###   ########.fr       */
+/*   Updated: 2020/05/19 00:05:33 by yu-lin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	recursive(char *path, char *flags)
 	t_helpers	current;
 	t_files		*files;
 	t_files		*dir_path;
-	// t_files		*tmp;
 
 	files = NULL;
 	dir_path = NULL;
@@ -38,11 +37,10 @@ void	recursive(char *path, char *flags)
 		if (!ft_strchr(flags, 'a') && current.mydirent->d_name[0] == '.')
 			continue;
 		if ((current.mydirent)->d_type == DT_DIR)
-		{
 			dir_path = direct_path(current.buf, ((current.mydirent)->d_name));
-			free(current.buf);
-		}
-		files = dynamic_file((current.mydirent->d_name), files);
+		current.tmp = ft_strjoin(current.buf, ((current.mydirent->d_name)));
+		files = dynamic_file(current.tmp, files);
+		free(current.tmp);
 	}
 	closedir(current.mydir);
 	sort_display(files, flags);
