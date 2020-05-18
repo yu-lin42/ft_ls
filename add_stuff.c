@@ -6,37 +6,11 @@
 /*   By: yu-lin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 11:20:16 by yu-lin            #+#    #+#             */
-/*   Updated: 2020/05/18 22:13:16 by yu-lin           ###   ########.fr       */
+/*   Updated: 2020/05/18 23:00:13 by yu-lin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
-void	get_all(char *path, char *flags, t_files *files, t_files *dir_path)
-{
-	t_helpers	current;
-	// t_files		*files;
-	// t_files		*dir_path;
-	// t_files		*tmp;
-
-	files = NULL;
-	dir_path = NULL;
-	current.mydir = opendir(path);
-	current.tmp = ft_strjoin(path, "/");
-	current.buf = ft_strdup(current.tmp);
-	free(current.tmp);
-	while ((current.mydirent = readdir(current.mydir)))
-	{
-		if (!ft_strchr(flags, 'a') && current.mydirent->d_name[0] == '.')
-			continue;
-		if ((current.mydirent)->d_type == DT_DIR)
-			dir_path = direct_path(current.buf, ((current.mydirent)->d_name));
-		current.tmp = ft_strjoin(current.buf, (current.mydirent)->d_name);
-		files = dynamic_file(current.tmp, files);
-		free(current.tmp);
-	}
-	closedir(current.mydir);
-}
 
 t_files		*new_file(const char *name)
 {
