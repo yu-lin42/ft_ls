@@ -6,7 +6,7 @@
 /*   By: yu-lin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 11:20:16 by yu-lin            #+#    #+#             */
-/*   Updated: 2020/05/18 23:00:13 by yu-lin           ###   ########.fr       */
+/*   Updated: 2020/05/18 23:13:13 by yu-lin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,14 @@ t_files		*direct_path(char *path, char *file_name)
 	dir_path = dynamic_file(curr.tmp, dir_path);
 	free(curr.tmp);
 	return (dir_path);
+}
+
+void	sort_display(t_files *files, char *flags)
+{
+	if (files != NULL)
+		sort_sequence(files, flags);
+	if (ft_strchr(flags, 'l'))
+		list_them(files);
+	else
+		print_list(&files);
 }

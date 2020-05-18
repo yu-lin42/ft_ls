@@ -12,3 +12,20 @@ void	multi(char *flags, t_files *files)
 	else
 		print_list(&valid);
 }
+
+void	repeat(t_files *dir_path, char *flags)
+{
+	t_files	*tmp;
+	
+	while (dir_path != NULL)
+	{
+		ft_putchar('\n');
+		ft_putstr(dir_path->file_name);
+		ft_putstr(":\n");
+		recursive(dir_path->file_name, flags);
+		free(dir_path->file_name);
+		tmp = dir_path;
+		dir_path = dir_path->next;
+		free(tmp);
+	}
+}

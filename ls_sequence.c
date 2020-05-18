@@ -6,7 +6,7 @@
 /*   By: yu-lin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/18 21:57:58 by yu-lin            #+#    #+#             */
-/*   Updated: 2020/05/18 23:06:28 by yu-lin           ###   ########.fr       */
+/*   Updated: 2020/05/18 23:21:20 by yu-lin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	recursive(char *path, char *flags)
 	t_helpers	current;
 	t_files		*files;
 	t_files		*dir_path;
-	t_files		*tmp;
+	// t_files		*tmp;
 
 	files = NULL;
 	dir_path = NULL;
@@ -45,23 +45,8 @@ void	recursive(char *path, char *flags)
 		files = dynamic_file((current.mydirent->d_name), files);
 	}
 	closedir(current.mydir);
-	if (files != NULL)
-		sort_sequence(files, flags);
-	if (ft_strchr(flags, 'l'))
-		list_them(files);
-	else
-		print_list(&files);
-	while (dir_path != NULL)
-	{
-		ft_putchar('\n');
-		ft_putstr(dir_path->file_name);
-		ft_putstr(":\n");
-		recursive(dir_path->file_name, flags);
-		free(dir_path->file_name);
-		tmp = dir_path;
-		dir_path = dir_path->next;
-		free(tmp);
-	}
+	sort_display(files, flags);
+	repeat(dir_path, flags);
 }
 
 void	no_recursive(char *path, char *flags)
@@ -78,12 +63,7 @@ void	no_recursive(char *path, char *flags)
 		files = dynamic_file((current.mydirent)->d_name, files);
 	}
 	closedir(current.mydir);
-	if (files != NULL)
-		sort_sequence(files, flags);
-	if (ft_strchr(flags, 'l'))
-		list_them(files);
-	else
-		print_list(&files);
+	sort_display(files, flags);
 }
 
 void	list_them(t_files *list)

@@ -48,11 +48,11 @@ void	sort_in_time(t_files *list);
 
 void	show_modes(t_files *list);
 void	show_stats(t_files *list);
-
+void	sort_display(t_files *files, char *flags);
 int		check_flags(char flag);
 
 void	print_list(t_files **stuff);
 void	show_files(t_files *list);
-
+void	repeat(t_files *dir_path, char *flags);
 void	multi(char *flags, t_files *files);
 #endif
