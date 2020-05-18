@@ -29,6 +29,7 @@ t_files		*check_files(t_files *files)
 		}
 		else
 			valid = dynamic_file(files->file_name, valid);
+		free(files->file_name);
 		files = files->next;
 	}
     return (valid);

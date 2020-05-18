@@ -6,7 +6,7 @@
 /*   By: yu-lin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 11:20:16 by yu-lin            #+#    #+#             */
-/*   Updated: 2020/05/18 03:25:04 by yu-lin           ###   ########.fr       */
+/*   Updated: 2020/05/18 14:40:40 by yu-lin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,20 @@ t_files		*dynamic_file(char *name, t_files *head)
 		head = teleport;
 	}
 	return (head);
+}
+
+t_files		*direct_path(char *path, char *file_name)
+{
+	t_helpers	curr;
+	t_files		*dir_path;
+	
+	dir_path = NULL;
+	curr.tmp = ft_strjoin(path, "/");
+	curr.buf = ft_strdup(curr.tmp);
+	free(curr.tmp);
+	curr.tmp = ft_strjoin(curr.buf, file_name);
+	free(curr.buf);
+	dir_path = dynamic_file(curr.tmp, dir_path);
+
+	return (dir_path);
 }
