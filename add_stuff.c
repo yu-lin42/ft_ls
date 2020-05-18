@@ -6,7 +6,7 @@
 /*   By: yu-lin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 11:20:16 by yu-lin            #+#    #+#             */
-/*   Updated: 2020/05/18 14:40:40 by yu-lin           ###   ########.fr       */
+/*   Updated: 2020/05/18 16:45:36 by yu-lin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,6 @@ t_files		*direct_path(char *path, char *file_name)
 	curr.tmp = ft_strjoin(curr.buf, file_name);
 	free(curr.buf);
 	dir_path = dynamic_file(curr.tmp, dir_path);
-
+	free(curr.tmp);
 	return (dir_path);
 }
