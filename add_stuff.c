@@ -6,70 +6,91 @@
 /*   By: yu-lin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 11:20:16 by yu-lin            #+#    #+#             */
-/*   Updated: 2020/05/18 23:13:13 by yu-lin           ###   ########.fr       */
+/*   Updated: 2020/05/27 02:43:45 by yu-lin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_files		*new_file(const char *name)
+t_files		*new_file(const char *name, char *path)
 {
 	t_files		*new;
+	char		*tmp;
+	char		*file_path;
 
+	tmp = ft_strjoin(path, "/");
+	file_path = ft_strjoin(tmp, name);
+	free(tmp);
 	new = (t_files *)malloc(sizeof(t_files));
 	new->file_name = ft_strdup(name);
+	if (*name == '/')
+		new->dir_path = ft_strdup("/");
+	// else if (*name == '~')
+	// 	new->dir_path = ft_strdup(name);
+	else
+		new->dir_path = ft_strdup(file_path);
 	new->next = NULL;
 	return (new);
 }
 
-void	add_file(const char *name, t_files *files)
+void	add_file(const char *name, char *path, t_files *files)
 {
 	t_files		*teleport;
+	char		*tmp;
+	char		*file_path;
 
 	teleport = files;
+	tmp = ft_strjoin(path, "/");
+	file_path = ft_strjoin(tmp, name);
+	free(tmp);
 	while (teleport->next != NULL)
 		teleport = teleport->next;
 	teleport->next = (t_files *)malloc(sizeof(t_files));
 	teleport->next->file_name = ft_strdup(name);
+	if (*name == '/')
+		teleport->next->dir_path = ft_strdup(name);
+	// else if (*name == '~')
+	// 	teleport->next->dir_path = ft_strdup(name);
+	else
+		teleport->next->dir_path = ft_strdup(file_path);
 	teleport->next->next = NULL;
 }
 
-t_files		*dynamic_file(char *name, t_files *head)
+t_files		*dynamic_file(char *path, char *name, t_files *head)
 {
 	t_files		*teleport;
 
 	teleport = head;
 	if (head == NULL)
 	{
-		head = new_file(name);
+		head = new_file(name, path);
 		teleport = head;
 	}
 	else
 	{
-		add_file(name, teleport);
+		add_file(name, path, teleport);
 		head = teleport;
 	}
 	return (head);
 }
 
-t_files		*direct_path(char *path, char *file_name)
+void	add_dir_path(char *path, char *file_name, t_files *list)
 {
 	t_helpers	curr;
-	t_files		*dir_path;
+	t_files		*teleport;
 	
-	dir_path = NULL;
+	teleport = list;
 	curr.tmp = ft_strjoin(path, file_name);
-	dir_path = dynamic_file(curr.tmp, dir_path);
+	teleport->dir_path = ft_strdup(curr.tmp);
 	free(curr.tmp);
-	return (dir_path);
 }
 
-void	sort_display(t_files *files, char *flags)
-{
-	if (files != NULL)
-		sort_sequence(files, flags);
-	if (ft_strchr(flags, 'l'))
-		list_them(files);
-	else
-		print_list(&files);
-}
+// void	sort_display(t_files *files, char *flags)
+// {
+// 	if (files != NULL)
+// 		sort_sequence(files, flags);
+// 	if (ft_strchr(flags, 'l'))
+// 		list_them(files);
+// 	else
+// 		print_list(&files);
+// }

@@ -1,20 +1,34 @@
 #include "ft_ls.h"
 
-t_files		*no_flags(char *path)
+t_files		*basic(char *path)
 {
-	t_helpers	current;
-	t_files		*basic;
+	t_helpers	curr;
+	t_files		*base;
 
-	basic = NULL;
-	current.mydir = opendir(path);
-	while ((current.mydirent = readdir(current.mydir)))
+	base = NULL;
+	curr.mydir = opendir(path);
+	while ((curr.mydirent = readdir(curr.mydir)))
 	{
-		if ((current.mydirent)->d_name[0] != '.')
-			basic = dynamic_file((current.mydirent)->d_name, basic);
+		if ((curr.mydirent)->d_name[0] != '.')
+			base = dynamic_file(path, (curr.mydirent)->d_name, base);
 	}
-	sort_files(basic);
-	closedir(current.mydir);
-	return (basic);
+	closedir(curr.mydir);
+	return (base);
+}
+
+t_files		*hidden(char *path)
+{
+	t_helpers	curr;
+	t_files		*aye;
+
+	aye = NULL;
+	curr.mydir = opendir(path);
+	while ((curr.mydirent = readdir(curr.mydir)))
+	{
+			aye = dynamic_file(path, (curr.mydirent)->d_name, aye);
+	}
+	closedir(curr.mydir);
+	return (aye);
 }
 
 char	*get_flags(int ac, char **flags_or_files)
@@ -24,7 +38,8 @@ char	*get_flags(int ac, char **flags_or_files)
 	int		j;
 	int		f;
 
-	flags = (char *)malloc(sizeof(char)*1);
+	// flags = (char *)malloc(sizeof(char)*1);
+	flags = ft_strnew(1);
 	i = 0;
 	f = 0;
 	while (++i < ac)
@@ -56,20 +71,24 @@ char	*get_flags(int ac, char **flags_or_files)
 t_files		*get_files(int ac, char **flags_or_files)
 {
 	t_files	*files;
+	t_files *valid;
 	int		i;
 
 	files = NULL;
+	valid = NULL;
 	i = 1;
 	while (i < ac)
 	{
 		if (flags_or_files[i][0] != '-')
-			files = dynamic_file(flags_or_files[i], files);
+			files = dynamic_file(".", flags_or_files[i], files);
 		i++;
 	}
-	if (files != NULL)
+	valid = check_files(".", files);
+
+	if (valid != NULL)
 	{
-		sort_files(files);
-		return (files);
+		// sort_files(valid);
+		return (valid);
 	}
 	return (NULL);
 }

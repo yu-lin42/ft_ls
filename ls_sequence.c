@@ -1,82 +1,115 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ls_sequence.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yu-lin <marvin@42.fr>                      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/18 21:57:58 by yu-lin            #+#    #+#             */
-/*   Updated: 2020/05/19 00:05:33 by yu-lin           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "ft_ls.h"
 
-void	ls_structure(char *flags)
+void	just_flags(char *flags)
 {
+	t_files *files;
+
+	files = NULL;
 	if (ft_strchr(flags, 'R'))
-		recursive(".", flags);
+	{
+		if (ft_strchr(flags, 'a'))
+			files = hidden(".");
+		else
+			files = basic(".");
+		recursive(flags, files);
+	}
 	else
-		no_recursive(".", flags);
+	{
+		if (ft_strchr(flags, 'a'))
+			files = hidden(".");
+		else
+			files = basic(".");
+		non_recursive(flags, files);
+		
+	}
 }
 
-void	recursive(char *path, char *flags)
+void	recursive(char *flags, t_files *list)
 {
-	t_helpers	current;
 	t_files		*files;
-	t_files		*dir_path;
+	t_files		*dir;
 
 	files = NULL;
-	dir_path = NULL;
-	current.mydir = opendir(path);
-	current.tmp = ft_strjoin(path, "/");
-	current.buf = ft_strdup(current.tmp);
-	free(current.tmp);
-	while ((current.mydirent = readdir(current.mydir)))
-	{
-		if (!ft_strchr(flags, 'a') && current.mydirent->d_name[0] == '.')
-			continue;
-		if ((current.mydirent)->d_type == DT_DIR)
-			dir_path = direct_path(current.buf, ((current.mydirent)->d_name));
-		current.tmp = ft_strjoin(current.buf, ((current.mydirent->d_name)));
-		files = dynamic_file(current.tmp, files);
-		free(current.tmp);
-	}
-	closedir(current.mydir);
-	sort_display(files, flags);
-	repeat(dir_path, flags);
-}
-
-void	no_recursive(char *path, char *flags)
-{
-	t_helpers	current;
-	t_files		*files;
-
-	files = NULL;
-	current.mydir = opendir(path);
-	while ((current.mydirent = readdir(current.mydir)))
-	{
-		if (!ft_strchr(flags, 'a') && current.mydirent->d_name[0] == '.')
-			continue;
-		files = dynamic_file((current.mydirent)->d_name, files);
-	}
-	closedir(current.mydir);
-	sort_display(files, flags);
-}
-
-void	list_them(t_files *list)
-{
-	t_files			*tmp;
-
+	dir = NULL;
 	while (list != NULL)
 	{
-		show_modes(list);
-		show_stats(list);
-		ft_putchar(' ');
-		ft_putendl(list->file_name);
-		free(list->file_name);
-		tmp = list;
+		if (is_dir(list->dir_path))
+			dir = dynamic_file(".", list->file_name, dir);
+		files = dynamic_file(".", list->file_name, files);
 		list = list->next;
-		free(tmp);
 	}
+	sort_sequence(files, flags);
+	print_n_free(&files);
+	if (dir != NULL)
+		sort_sequence(dir, flags);
+	while (dir != NULL)
+	{
+		if (dir->file_name[0] == '.')
+			dir = dir->next;
+		else
+		{
+			ft_putchar('\n');
+			ft_putstr(dir->file_name);
+			ft_putendl(": ");
+			if (ft_strchr(flags, 'a'))
+				files = hidden(dir->dir_path);
+			else
+				files = basic(dir->dir_path);
+			recursive(flags, files);
+			free(dir->dir_path);
+			free_list(files);
+			dir = dir->next;
+		}
+	}
+	free_list(dir);
+}
+
+
+void	non_recursive(char *flags, t_files *list)
+{
+	sort_sequence(list, flags);
+	print_n_free(&list);
+}
+
+void	just_files(t_files *list)
+{
+	t_files		*files;
+	t_files		*dir;
+
+	files = NULL;
+	dir = NULL;
+	while (list != NULL)
+	{
+		if (is_dir(list->dir_path))
+			dir = dynamic_file(".", list->file_name, dir);
+		else
+			files = dynamic_file(".", list->file_name, files);
+		list = list->next;
+	}
+	if (files == NULL && dir->next == NULL)
+	{
+		files = basic(dir->dir_path);
+		sort_files(files);
+		print_n_free(&files);
+	}
+	else
+	{
+		sort_files(files);
+		print_n_free(&files);
+		if (dir != NULL)
+		{
+			ft_putchar('\n');
+			while (dir != NULL)
+			{
+				ft_putstr(dir->dir_path);
+				ft_putendl(":");
+				files = basic(dir->dir_path);
+				sort_files(files);
+				print_n_free(&files);
+				// free(dir->dir_path);
+				dir = dir->next;
+			}	
+		}
+	}
+	free_list(dir);
 }

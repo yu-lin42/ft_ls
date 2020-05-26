@@ -6,7 +6,7 @@
 /*   By: yu-lin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/18 21:52:00 by yu-lin            #+#    #+#             */
-/*   Updated: 2020/05/18 21:52:03 by yu-lin           ###   ########.fr       */
+/*   Updated: 2020/05/26 20:03:07 by yu-lin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		check_flags(char flag)
     return (0);
 }
 
-t_files		*check_files(t_files *files)
+t_files		*check_files(char *path, t_files *files)
 {
 	struct stat		buf;
     t_files			*valid;
@@ -41,11 +41,29 @@ t_files		*check_files(t_files *files)
 			ft_putendl("ft_ls: No such file or directory");
 		}
 		else
-			valid = dynamic_file(files->file_name, valid);
+			valid = dynamic_file(path, files->file_name, valid);
 		free(files->file_name);
 		tmp = files;
 		files = files->next;
 		free(tmp);
 	}
     return (valid);
+}
+
+int	is_dir(char *path)
+{
+	t_helpers	check;
+	
+	if ((check.mydir = opendir(path)) != NULL)
+	{
+		while ((check.mydirent = readdir(check.mydir)))
+		{
+			if ((check.mydirent)->d_type == DT_DIR)
+			{
+				return (1);
+			}
+		}
+		closedir(check.mydir);	
+	}
+	return (0);
 }
