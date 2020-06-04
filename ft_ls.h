@@ -22,37 +22,44 @@ typedef struct	s_helpers
 
 typedef struct	s_files
 {
-	char			flag;
+	// char			flag;
 	char			*file_name;
 	char			*dir_path;
 	struct s_files	*next;
 }					t_files;
 
-t_files	*no_flags(char *path);
-char	*get_flags(int ac, char **flags_or_files);
-t_files	*get_files(int ac, char **flags_or_files);
-t_files	*check_files(t_files *files);
-void	ls_structure(char *flags);
-void	list_them(t_files *list);
-void	recursive(char *path, char *flags);
-void	no_recursive(char *path, char *flags);
-t_files	*dynamic_file(char *name, t_files *head);
-t_files	*new_file(const char *name);
-void	add_file(const char *name, t_files *files);
-t_files		*direct_path(char *path, char *file_name);
+t_files		*basic(char *path);
+t_files		*hidden(char *path);
+
+char		*get_flags(int ac, char **flags_or_files);
+t_files		*get_files(int, char **flags_or_files);
+void		just_files(t_files *list);
+void		just_flags(char *flags);
+
+t_files		*dynamic_file(char *path, char *name, t_files *head);
+t_files		*new_file(const char *name, char *path);
+void		add_file(const char *name, char *path, t_files *files);
+void		add_dir_path(char *path, char *file_name, t_files *list);
+
+int			check_flags(char flag);
+t_files		*check_files(char *path, t_files *files);
+int			is_dir(char *path);
+void		print_n_free(t_files **list);
+void		free_list(t_files *list);
+
+void	recursive(char *flags, t_files *list);
+void	non_recursive(char *flags, t_files *list);
+
 void	sort_sequence(t_files *files, char *flags);
-void	sort_files(t_files *list);
+void		sort_files(t_files *list);
 void	sort_in_reverse_time(t_files *list);
 void	sort_in_reverse(t_files *list);
 void	sort_in_time(t_files *list);
 
-void	show_modes(t_files *list);
+void	list_them(t_files *list);
+void	total_blocks(t_files *list);
+void	show_permissions(t_files *list);
 void	show_stats(t_files *list);
-void	sort_display(t_files *files, char *flags);
-int		check_flags(char flag);
 
-void	print_list(t_files **stuff);
-void	show_files(t_files *list);
-void	repeat(t_files *dir_path, char *flags);
-void	multi(char *flags, t_files *files);
+void flags_n_files(char *flags, t_files *list);
 #endif

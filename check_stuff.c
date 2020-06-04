@@ -6,7 +6,7 @@
 /*   By: yu-lin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/18 21:52:00 by yu-lin            #+#    #+#             */
-/*   Updated: 2020/05/26 20:03:07 by yu-lin           ###   ########.fr       */
+/*   Updated: 2020/06/01 21:29:47 by yu-lin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,7 @@ int	is_dir(char *path)
 		while ((check.mydirent = readdir(check.mydir)))
 		{
 			if ((check.mydirent)->d_type == DT_DIR)
-			{
 				return (1);
-			}
 		}
 		closedir(check.mydir);	
 	}

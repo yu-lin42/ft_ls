@@ -6,7 +6,7 @@
 /*   By: yu-lin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/18 21:51:26 by yu-lin            #+#    #+#             */
-/*   Updated: 2020/05/27 00:02:12 by yu-lin           ###   ########.fr       */
+/*   Updated: 2020/06/01 23:35:17 by yu-lin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ int		main(int ac, char **av)
 			just_files(files);
 			//print_n_free(&files);
 		}
-		else
-			ft_putendl("Flags with files/directories");
+		else if (files != NULL && flags != NULL)
+			// ft_putendl("HELLO?");
+			flags_n_files(flags, files);
 		free(flags);
 	}
 	// sleep(40);

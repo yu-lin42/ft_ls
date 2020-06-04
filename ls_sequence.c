@@ -39,7 +39,10 @@ void	recursive(char *flags, t_files *list)
 		list = list->next;
 	}
 	sort_sequence(files, flags);
-	print_n_free(&files);
+	if (ft_strchr(flags, 'l'))
+		list_them(files);
+	else
+		print_n_free(&files);
 	if (dir != NULL)
 		sort_sequence(dir, flags);
 	while (dir != NULL)
@@ -68,7 +71,10 @@ void	recursive(char *flags, t_files *list)
 void	non_recursive(char *flags, t_files *list)
 {
 	sort_sequence(list, flags);
-	print_n_free(&list);
+	if (ft_strchr(flags, 'l'))
+		list_them(list);
+	else
+		print_n_free(&list);
 }
 
 void	just_files(t_files *list)
@@ -112,4 +118,22 @@ void	just_files(t_files *list)
 		}
 	}
 	free_list(dir);
+}
+
+void	list_them(t_files *list)
+{
+	t_files		*tmp;
+
+	total_blocks(list);
+	while (list != NULL)
+	{
+		show_permissions(list);
+		show_stats(list);
+		ft_putchar(' ');
+		ft_putendl(list->file_name);
+		free(list->file_name);
+		tmp = list;
+		free(tmp);
+		list = list->next;
+	}
 }

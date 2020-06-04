@@ -1,7 +1,7 @@
 NAME = ft_ls
 
 LIB_DIR = ./libft
-SRC = main.c add_stuff.c parser.c check_stuff.c show_stuff.c ls_sequence.c sorting.c free_stuff.c
+SRC = main.c add_stuff.c parser.c check_stuff.c show_stuff.c ls_sequence.c sorting.c free_stuff.c multiple_stuff.c
 FLAGS = -Wall -Werror -Wextra
 
 all: $(NAME)

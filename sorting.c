@@ -1,15 +1,16 @@
 #include "ft_ls.h"
+#include <stdio.h>
 
 void	sort_sequence(t_files *files, char *flags)
 {
 	if (ft_strchr(flags, 'r') && (ft_strchr(flags, 't')))
-			sort_in_reverse_time(files);
-		else if (ft_strchr(flags, 'r'))
-			sort_in_reverse(files);
-		else if (ft_strchr(flags, 't'))
-			sort_in_time(files);
-		else
-			sort_files(files);
+		sort_in_reverse_time(files);
+	else if (ft_strchr(flags, 'r'))
+		sort_in_reverse(files);
+	else if (ft_strchr(flags, 't'))
+		sort_in_time(files);
+	else
+		sort_files(files);
 }
 
 void	sort_files(t_files *list)
@@ -46,13 +47,13 @@ void	sort_in_reverse_time(t_files *list)
 	tmp = list;
 	while (list->next)
 	{
-		lstat(list->file_name, &info1);
-		lstat(list->next->file_name, &info2);
+		lstat(list->dir_path, &info1);
+		lstat(list->next->dir_path, &info2);
 		if (info2.st_mtime < info1.st_mtime)
 		{
-			store = list->file_name;
-			list->file_name = list->next->file_name;
-			list->next->file_name = store;
+			store = list->dir_path;
+			list->dir_path = list->next->dir_path;
+			list->next->dir_path = store;
 			list = tmp;
 		}
 		else
@@ -94,13 +95,13 @@ void	sort_in_time(t_files *list)
 	tmp = list;
 	while (list->next)
 		{
-			lstat(list->file_name, &info1);
-			lstat(list->next->file_name, &info2);
-			if (info2.st_mtime > info1.st_mtime)
+			lstat(list->dir_path, &info1);
+			lstat(list->next->dir_path, &info2);
+			if (info1.st_mtime < info2.st_mtime)
 			{
-				store = list->file_name;
-				list->file_name = list->next->file_name;
-				list->next->file_name = store;
+				store = list->dir_path;
+				list->dir_path = list->next->dir_path;
+				list->next->dir_path = store;
 				list = tmp;
 			}
 			else
