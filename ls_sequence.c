@@ -11,7 +11,7 @@ void	just_flags(char *flags)
 			files = hidden(".");
 		else
 			files = basic(".");
-		recursive(flags, files);
+		recursive(flags, files, ".");
 	}
 	else
 	{
@@ -20,11 +20,10 @@ void	just_flags(char *flags)
 		else
 			files = basic(".");
 		non_recursive(flags, files);
-		
 	}
 }
 
-void	recursive(char *flags, t_files *list)
+void	recursive(char *flags, t_files *list, char *path)
 {
 	t_files		*files;
 	t_files		*dir;
@@ -34,13 +33,16 @@ void	recursive(char *flags, t_files *list)
 	while (list != NULL)
 	{
 		if (is_dir(list->dir_path))
-			dir = dynamic_file(".", list->file_name, dir);
-		files = dynamic_file(".", list->file_name, files);
+			dir = dynamic_file(path, list->file_name, dir);
+		files = dynamic_file(path, list->file_name, files);
 		list = list->next;
 	}
 	sort_sequence(files, flags);
 	if (ft_strchr(flags, 'l'))
+	{
+		total_blocks(files);
 		list_them(files);
+	}
 	else
 		print_n_free(&files);
 	if (dir != NULL)
@@ -58,7 +60,7 @@ void	recursive(char *flags, t_files *list)
 				files = hidden(dir->dir_path);
 			else
 				files = basic(dir->dir_path);
-			recursive(flags, files);
+			recursive(flags, files, dir->dir_path);
 			free(dir->dir_path);
 			free_list(files);
 			dir = dir->next;
@@ -72,7 +74,10 @@ void	non_recursive(char *flags, t_files *list)
 {
 	sort_sequence(list, flags);
 	if (ft_strchr(flags, 'l'))
+	{
+		total_blocks(list);
 		list_them(list);
+	}
 	else
 		print_n_free(&list);
 }
@@ -100,11 +105,19 @@ void	just_files(t_files *list)
 	}
 	else
 	{
-		sort_files(files);
-		print_n_free(&files);
+		if (files != NULL && dir == NULL)
+		{
+			sort_files(files);
+			print_n_free(&files);
+		}
+		if (files != NULL && dir != NULL)
+		{
+			sort_files(files);
+			print_n_free(&files);
+			ft_putchar('\n');
+		}
 		if (dir != NULL)
 		{
-			ft_putchar('\n');
 			while (dir != NULL)
 			{
 				ft_putstr(dir->dir_path);
@@ -112,9 +125,11 @@ void	just_files(t_files *list)
 				files = basic(dir->dir_path);
 				sort_files(files);
 				print_n_free(&files);
-				// free(dir->dir_path);
+				if (dir->next != NULL)
+					ft_putchar('\n');
+				free(dir->dir_path);
 				dir = dir->next;
-			}	
+			}
 		}
 	}
 	free_list(dir);
@@ -122,9 +137,7 @@ void	just_files(t_files *list)
 
 void	list_them(t_files *list)
 {
-	t_files		*tmp;
-
-	total_blocks(list);
+	// total_blocks(list);
 	while (list != NULL)
 	{
 		show_permissions(list);
@@ -132,8 +145,6 @@ void	list_them(t_files *list)
 		ft_putchar(' ');
 		ft_putendl(list->file_name);
 		free(list->file_name);
-		tmp = list;
-		free(tmp);
 		list = list->next;
 	}
 }

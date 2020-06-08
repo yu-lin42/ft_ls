@@ -47,7 +47,7 @@ int			is_dir(char *path);
 void		print_n_free(t_files **list);
 void		free_list(t_files *list);
 
-void	recursive(char *flags, t_files *list);
+void	recursive(char *flags, t_files *list, char *path);
 void	non_recursive(char *flags, t_files *list);
 
 void	sort_sequence(t_files *files, char *flags);

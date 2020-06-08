@@ -77,7 +77,6 @@ all: $(NAME)
 
 $(NAME):
 	@gcc $(FLAGS) -c $(SRC) -I.
-	@echo "gcc $(FLAGS) -c SRC -I."
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
 

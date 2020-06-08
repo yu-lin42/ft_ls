@@ -29,15 +29,10 @@ int		main(int ac, char **av)
 		flags = get_flags(ac, av);
 		files = get_files(ac, av);
 		if (flags != NULL && files == NULL)
-			// ft_putendl("Just flags");
 			just_flags(flags);
 		else if (files != NULL && flags == NULL)
-		{
 			just_files(files);
-			//print_n_free(&files);
-		}
 		else if (files != NULL && flags != NULL)
-			// ft_putendl("HELLO?");
 			flags_n_files(flags, files);
 		free(flags);
 	}

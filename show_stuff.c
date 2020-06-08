@@ -9,6 +9,7 @@ void	print_n_free(t_files **list)
 	{
 		ft_putendl(head->file_name);
 		free(head->file_name);
+		free(head->dir_path);
 		head = head->next;
 		free(*list);
 		*list = head;
@@ -33,7 +34,8 @@ void	show_permissions(t_files *list)
 	chmod[9] = (S_IXOTH & info.st_mode) ? 'x' : '-';
 	chmod[10] = ' ';//no stickybits
 	chmod[11] = '\0';
-	ft_putendt(chmod);
+	ft_putstr(chmod);
+	ft_putchar(' ');
 }
 
 void	show_stats(t_files *list)
@@ -45,7 +47,7 @@ void	show_stats(t_files *list)
 
 	lstat(list->dir_path, &info);
 	ft_putnbr(info.st_nlink);
-	ft_putchar('\t');
+	ft_putchar(' ');
 	usr = getpwuid(info.st_uid);
 	ft_putendt(usr->pw_name);
 	grp = getgrgid(info.st_gid);
@@ -70,9 +72,10 @@ void	total_blocks(t_files *list)
 	{
 		lstat(tmp->dir_path, &info);
 		total += info.st_blocks; 
-		list = list->next;
+		tmp = tmp->next;
 	}
 	ft_putstr("total: ");
 	ft_putnbr(total);
 	ft_putchar('\n');
+	free_list(tmp);
 }

@@ -1,3 +1,12 @@
+# RED = \033[31m
+# GREEN = \x1b[32m
+# YELLOW = \x1b[33m
+# CYAN = \x1b[36m
+# NC = \033[0m
+START = "${RED}Starting compilation...${NC}"
+MIDDLE = "${YELLOW}Creating archive...${NC}"
+END = "${GREEN}Finishing...${NC}"
+
 NAME = ft_ls
 
 LIB_DIR = ./libft
@@ -7,11 +16,14 @@ FLAGS = -Wall -Werror -Wextra
 all: $(NAME)
 
 $(NAME):
+	@echo "${CYAN}Creating LIBFT${NC}"
 	@make -C $(LIB_DIR)
-	@echo "Compiling LIBFT..."
+	@echo ${START}
 	@gcc $(FLAGS) $(SRC) $(LIB_DIR)/libft.a -o $(NAME)
-	@echo "Compiling ft_ls..."
-	@echo "Ta-Da!!! Complete!"
+	@echo ${MIDDLE}
+	@make clean
+	@echo ${END}
+	@echo "Ta-Da! :D"
 
 clean:
 	@make -C $(LIB_DIR) clean

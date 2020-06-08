@@ -25,10 +25,9 @@ t_files		*new_file(const char *name, char *path)
 	new->file_name = ft_strdup(name);
 	if (*name == '/')
 		new->dir_path = ft_strdup("/");
-	// else if (*name == '~')
-	// 	new->dir_path = ft_strdup(name);
 	else
 		new->dir_path = ft_strdup(file_path);
+	free(file_path);
 	new->next = NULL;
 	return (new);
 }
@@ -49,10 +48,9 @@ void	add_file(const char *name, char *path, t_files *files)
 	teleport->next->file_name = ft_strdup(name);
 	if (*name == '/')
 		teleport->next->dir_path = ft_strdup(name);
-	// else if (*name == '~')
-	// 	teleport->next->dir_path = ft_strdup(name);
 	else
 		teleport->next->dir_path = ft_strdup(file_path);
+	free(file_path);
 	teleport->next->next = NULL;
 }
 
@@ -74,16 +72,16 @@ t_files		*dynamic_file(char *path, char *name, t_files *head)
 	return (head);
 }
 
-void	add_dir_path(char *path, char *file_name, t_files *list)
-{
-	t_helpers	curr;
-	t_files		*teleport;
+// void	add_dir_path(char *path, char *file_name, t_files *list)
+// {
+// 	t_helpers	curr;
+// 	t_files		*teleport;
 	
-	teleport = list;
-	curr.tmp = ft_strjoin(path, file_name);
-	teleport->dir_path = ft_strdup(curr.tmp);
-	free(curr.tmp);
-}
+// 	teleport = list;
+// 	curr.tmp = ft_strjoin(path, file_name);
+// 	teleport->dir_path = ft_strdup(curr.tmp);
+// 	free(curr.tmp);
+// }
 
 // void	sort_display(t_files *files, char *flags)
 // {

@@ -22,15 +22,41 @@ void flags_n_files(char *flags, t_files *list)
 		else
 			files = basic(dir->dir_path);
 		sort_sequence(files, flags);
-		print_n_free(&files);
+		if (ft_strchr(flags, 'l'))
+		{
+			total_blocks(files);
+			list_them(files);
+		}
+		else
+			print_n_free(&files);
 	}
 	else
 	{
-		sort_sequence(files, flags);
-		print_n_free(&files);
+		if (files != NULL && dir == NULL)
+		{
+			sort_sequence(files, flags);
+			if (ft_strchr(flags, 'l'))
+			{
+				total_blocks(files);
+				list_them(files);
+			}
+			else
+				print_n_free(&files);
+		}
+		if (files != NULL && dir != NULL)
+		{
+			sort_sequence(files, flags);
+			if (ft_strchr(flags, 'l'))
+			{
+				total_blocks(files);
+				list_them(files);
+			}
+			else
+				print_n_free(&files);
+			ft_putchar('\n');
+		}
 		if (dir != NULL)
 		{
-			ft_putchar('\n');
 			while (dir != NULL)
 			{
 				ft_putstr(dir->dir_path);
@@ -40,7 +66,15 @@ void flags_n_files(char *flags, t_files *list)
 				else
 					files = basic(dir->dir_path);
 				sort_sequence(files, flags);
+				if (ft_strchr(flags, 'l'))
+				{
+					total_blocks(files);
+					list_them(files);
+				}
+				else
 				print_n_free(&files);
+				if (dir->next != NULL)
+					ft_putchar('\n');
 				// free(dir->dir_path);
 				dir = dir->next;
 			}	
