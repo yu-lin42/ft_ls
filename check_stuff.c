@@ -43,6 +43,7 @@ t_files		*check_files(char *path, t_files *files)
 		else
 			valid = dynamic_file(path, files->file_name, valid);
 		free(files->file_name);
+		free(files->dir_path);
 		tmp = files;
 		files = files->next;
 		free(tmp);

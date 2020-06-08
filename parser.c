@@ -24,9 +24,7 @@ t_files		*hidden(char *path)
 	aye = NULL;
 	curr.mydir = opendir(path);
 	while ((curr.mydirent = readdir(curr.mydir)))
-	{
 			aye = dynamic_file(path, (curr.mydirent)->d_name, aye);
-	}
 	closedir(curr.mydir);
 	return (aye);
 }
@@ -38,7 +36,6 @@ char	*get_flags(int ac, char **flags_or_files)
 	int		j;
 	int		f;
 
-	// flags = (char *)malloc(sizeof(char)*1);
 	flags = ft_strnew(1);
 	i = 0;
 	f = 0;
@@ -86,9 +83,6 @@ t_files		*get_files(int ac, char **flags_or_files)
 	valid = check_files(".", files);
 
 	if (valid != NULL)
-	{
-		// sort_files(valid);
 		return (valid);
-	}
 	return (NULL);
 }
