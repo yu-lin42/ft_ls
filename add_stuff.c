@@ -71,24 +71,3 @@ t_files		*dynamic_file(char *path, char *name, t_files *head)
 	}
 	return (head);
 }
-
-// void	add_dir_path(char *path, char *file_name, t_files *list)
-// {
-// 	t_helpers	curr;
-// 	t_files		*teleport;
-	
-// 	teleport = list;
-// 	curr.tmp = ft_strjoin(path, file_name);
-// 	teleport->dir_path = ft_strdup(curr.tmp);
-// 	free(curr.tmp);
-// }
-
-// void	sort_display(t_files *files, char *flags)
-// {
-// 	if (files != NULL)
-// 		sort_sequence(files, flags);
-// 	if (ft_strchr(flags, 'l'))
-// 		list_them(files);
-// 	else
-// 		print_list(&files);
-// }

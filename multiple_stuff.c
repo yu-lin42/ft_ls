@@ -17,42 +17,16 @@ void flags_n_files(char *flags, t_files *list)
 	}
 	if (files == NULL && dir->next == NULL)
 	{
-		if (ft_strchr(flags, 'a'))
-			files = hidden(dir->dir_path);
-		else
-			files = basic(dir->dir_path);
-		sort_sequence(files, flags);
-		if (ft_strchr(flags, 'l'))
-		{
-			total_blocks(files);
-			list_them(files);
-		}
-		else
-			print_n_free(&files);
+		files = dot_or_not(flags, dir->dir_path);
+		sort_display(files, flags);
 	}
 	else
 	{
 		if (files != NULL && dir == NULL)
-		{
-			sort_sequence(files, flags);
-			if (ft_strchr(flags, 'l'))
-			{
-				total_blocks(files);
-				list_them(files);
-			}
-			else
-				print_n_free(&files);
-		}
+			sort_display(files, flags);
 		if (files != NULL && dir != NULL)
 		{
-			sort_sequence(files, flags);
-			if (ft_strchr(flags, 'l'))
-			{
-				total_blocks(files);
-				list_them(files);
-			}
-			else
-				print_n_free(&files);
+			sort_display(files, flags);
 			ft_putchar('\n');
 		}
 		if (dir != NULL)
@@ -61,24 +35,14 @@ void flags_n_files(char *flags, t_files *list)
 			{
 				ft_putstr(dir->dir_path);
 				ft_putendl(":");
-				if (ft_strchr(flags, 'a'))
-					files = hidden(dir->dir_path);
-				else
-					files = basic(dir->dir_path);
-				sort_sequence(files, flags);
-				if (ft_strchr(flags, 'l'))
-				{
-					total_blocks(files);
-					list_them(files);
-				}
-				else
-				print_n_free(&files);
+				files = dot_or_not(flags, dir->dir_path);
+				sort_display(files, flags);
 				if (dir->next != NULL)
 					ft_putchar('\n');
-				// free(dir->dir_path);
 				dir = dir->next;
 			}	
 		}
 	}
-	// free_list(dir);
+	free_list(files);
+	free_list(dir);
 }

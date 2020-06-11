@@ -3,7 +3,6 @@
 # include "libft/libft.h"
 # include <sys/stat.h>
 # include <sys/types.h>
-//# include <uuid/uuid.h>
 # include <pwd.h>
 # include <grp.h>
 # include <errno.h>
@@ -22,12 +21,12 @@ typedef struct	s_helpers
 
 typedef struct	s_files
 {
-	// char			flag;
 	char			*file_name;
 	char			*dir_path;
 	struct s_files	*next;
 }					t_files;
 
+t_files		*dot_or_not(char *flags, char *path);
 t_files		*basic(char *path);
 t_files		*hidden(char *path);
 
@@ -44,7 +43,7 @@ void		add_dir_path(char *path, char *file_name, t_files *list);
 int			check_flags(char flag);
 t_files		*check_files(char *path, t_files *files);
 int			is_dir(char *path);
-void		print_n_free(t_files **list);
+void		print_list(t_files *list);
 void		free_list(t_files *list);
 
 void	recursive(char *flags, t_files *list, char *path);
@@ -55,7 +54,7 @@ void		sort_files(t_files *list);
 void	sort_in_reverse_time(t_files *list);
 void	sort_in_reverse(t_files *list);
 void	sort_in_time(t_files *list);
-
+void	sort_display(t_files *files, char *flags);
 void	list_them(t_files *list);
 void	total_blocks(t_files *list);
 void	show_permissions(t_files *list);

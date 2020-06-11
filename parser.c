@@ -29,6 +29,18 @@ t_files		*hidden(char *path)
 	return (aye);
 }
 
+t_files		*dot_or_not(char *flags, char *path)
+{
+	t_files		*files;
+
+	files = NULL;
+	if (ft_strchr(flags, 'a'))
+		files = hidden(path);
+	else
+		files = basic(path);
+	return (files);
+}
+
 char	*get_flags(int ac, char **flags_or_files)
 {
 	char	*flags;

@@ -1,18 +1,15 @@
 #include "ft_ls.h"
 
-void	print_n_free(t_files **list)
+void	print_list(t_files *list)
 {
 	t_files		*head;
 
-	head = *list;
+	head = list;
 	while (head != NULL)
 	{
 		ft_putendl(head->file_name);
-		free(head->file_name);
-		free(head->dir_path);
 		head = head->next;
-		free(*list);
-		*list = head;
+		list = head;
 	}
 }
 
@@ -78,4 +75,17 @@ void	total_blocks(t_files *list)
 	ft_putnbr(total);
 	ft_putchar('\n');
 	free_list(tmp);
+}
+
+void	sort_display(t_files *files, char *flags)
+{
+	if (files != NULL)
+		sort_sequence(files, flags);
+	if (ft_strchr(flags, 'l'))
+	{
+		total_blocks(files);
+		list_them(files);
+	}
+	else
+		print_list(files);
 }
