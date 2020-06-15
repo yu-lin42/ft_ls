@@ -71,3 +71,19 @@ t_files		*dynamic_file(char *path, char *name, t_files *head)
 	}
 	return (head);
 }
+
+t_files		*directory(char *path)
+{
+	t_helpers		curr;
+	t_files			*dir;
+
+	dir = NULL;
+	curr.mydir = opendir(path);
+	while ((curr.mydirent = readdir(curr.mydir)))
+	{
+		if ((curr.mydirent)->d_type == DT_DIR)
+			dir = dynamic_file(path, (curr.mydirent)->d_name, dir);
+	}
+	closedir(curr.mydir);
+	return (dir);
+}

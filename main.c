@@ -23,6 +23,7 @@ int		main(int ac, char **av)
 		ls = basic(".");
 		sort_files(ls);
 		print_list(ls);
+		free_list(ls);
 	}
 	else
 	{
@@ -35,7 +36,6 @@ int		main(int ac, char **av)
 		else if (files != NULL && flags != NULL)
 			flags_n_files(flags, files);
 		free(flags);
-		// free_list(files);
 	}
 	// sleep(40);
 	return (0);

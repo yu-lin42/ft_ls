@@ -38,7 +38,6 @@ void		just_flags(char *flags);
 t_files		*dynamic_file(char *path, char *name, t_files *head);
 t_files		*new_file(const char *name, char *path);
 void		add_file(const char *name, char *path, t_files *files);
-void		add_dir_path(char *path, char *file_name, t_files *list);
 
 int			check_flags(char flag);
 t_files		*check_files(char *path, t_files *files);
@@ -46,19 +45,20 @@ int			is_dir(char *path);
 void		print_list(t_files *list);
 void		free_list(t_files *list);
 
-void	recursive(char *flags, t_files *list, char *path);
-void	non_recursive(char *flags, t_files *list);
+void		recursive(char *flags, t_files *list, char *path);
+void		non_recursive(char *flags, t_files *list);
 
-void	sort_sequence(t_files *files, char *flags);
+void		sort_sequence(t_files *files, char *flags);
 void		sort_files(t_files *list);
-void	sort_in_reverse_time(t_files *list);
-void	sort_in_reverse(t_files *list);
-void	sort_in_time(t_files *list);
-void	sort_display(t_files *files, char *flags);
-void	list_them(t_files *list);
-void	total_blocks(t_files *list);
-void	show_permissions(t_files *list);
-void	show_stats(t_files *list);
+void		sort_in_reverse_time(t_files *list);
+void		sort_in_reverse(t_files *list);
+void		sort_in_time(t_files *list);
+void		sort_display(t_files *files, char *flags);
+void		list_them(t_files *list);
+void		total_blocks(t_files *list);
+void		show_permissions(t_files *list);
+void		show_stats(t_files *list);
 
-void flags_n_files(char *flags, t_files *list);
+void		flags_n_files(char *flags, t_files *list);
+t_files		*directory(char *path);
 #endif

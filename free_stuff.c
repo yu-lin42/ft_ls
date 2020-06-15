@@ -2,15 +2,11 @@
 
 void	free_list(t_files *list)
 {
-	t_files		*head;
-
-	head = list;
-	while (head != NULL)
+	while (list != NULL)
 	{
-		free(head->file_name);
-		free(head->dir_path);
-		head = head->next;
+		free(list->file_name);
+		free(list->dir_path);
 		free(list);
-		list = head;
+		list = list->next;
 	}
 }

@@ -51,7 +51,7 @@ t_files		*check_files(char *path, t_files *files)
     return (valid);
 }
 
-int	is_dir(char *path)
+int		is_dir(char *path)
 {
 	t_helpers	check;
 	

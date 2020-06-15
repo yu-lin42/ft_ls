@@ -93,7 +93,6 @@ t_files		*get_files(int ac, char **flags_or_files)
 		i++;
 	}
 	valid = check_files(".", files);
-
 	if (valid != NULL)
 		return (valid);
 	return (NULL);
