@@ -25,6 +25,7 @@ void flags_n_files(char *flags, t_files *list)
 		files = dot_or_not(flags, dir->dir_path);
 		sort_display(files, flags);
 		free_list(dir);
+		free_list(files);
 	}
 	else if (dir != NULL)
 	{
@@ -32,6 +33,7 @@ void flags_n_files(char *flags, t_files *list)
 		{
 			sort_display(files, flags);
 			ft_putchar('\n');
+			free_list(files);
 		}
 		sort_sequence(dir, flags);
 		while (dir != NULL)
@@ -46,8 +48,8 @@ void flags_n_files(char *flags, t_files *list)
 			free(dir->dir_path);
 			free(dir);
 			dir = dir->next;
+			free_list(files);
 		}
 		free_list(dir);
 	}
-	free_list(files);
 }

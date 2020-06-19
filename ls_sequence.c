@@ -1,5 +1,4 @@
 #include "ft_ls.h"
-#include <stdio.h>
 
 void	just_flags(char *flags)
 {
@@ -10,11 +9,13 @@ void	just_flags(char *flags)
 	{
 		files = dot_or_not(flags, ".");
 		recursive(flags, files, ".");
+		free_list(files);
 	}
 	else
 	{
 		files = dot_or_not(flags, ".");
 		non_recursive(flags, files);
+		free_list(files);
 	}
 }
 
@@ -35,6 +36,7 @@ void	recursive(char *flags, t_files *list, char *path)
 			ft_putendl(": ");
 			files = dot_or_not(flags, dir->dir_path);
 			recursive(flags, files, dir->dir_path);
+			free_list(files);
 		}
 		free(dir->file_name);
 		free(dir->dir_path);
@@ -42,7 +44,6 @@ void	recursive(char *flags, t_files *list, char *path)
 		dir = dir->next;
 	}
 	free_list(dir);
-	free_list(files);
 }
 
 
@@ -70,20 +71,22 @@ void	just_files(t_files *list)
 		free(list);
 		list = list->next;
 	}
-	if (files != NULL && dir == NULL) //just files
+	if (files != NULL && dir == NULL)
 		sort_display(files, NULL);
-	else if (files == NULL && dir->next == NULL) //just 1 directory, no files
+	else if (files == NULL && dir->next == NULL)
 	{
 		files = basic(dir->dir_path);
 		sort_display(files, NULL);
 		free_list(dir);
+		free_list(files);
 	}
-	else if (dir != NULL) //files and more than 1 directory
+	else if (dir != NULL)
 	{
 		if (files != NULL)
 		{
 			sort_display(files, NULL);
 			ft_putchar('\n');
+			free_list(files);
 		}
 		sort_files(dir);
 		while (dir != NULL)
@@ -98,10 +101,10 @@ void	just_files(t_files *list)
 			free(dir->dir_path);
 			free(dir);
 			dir = dir->next;
+			free_list(files);
 		}
 		free_list(dir);
 	}
-	free_list(files);
 }
 
 void	list_them(t_files *list)

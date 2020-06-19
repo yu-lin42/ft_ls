@@ -60,7 +60,10 @@ int		is_dir(char *path)
 		while ((check.mydirent = readdir(check.mydir)))
 		{
 			if ((check.mydirent)->d_type == DT_DIR)
+			{
+				closedir(check.mydir);
 				return (1);
+			}
 		}
 		closedir(check.mydir);	
 	}
